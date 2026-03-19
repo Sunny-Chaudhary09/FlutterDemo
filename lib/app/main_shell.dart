@@ -20,29 +20,32 @@ class MainShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NavigationCubit, NavigationState>(
-      builder: (context, nav) {
-        return Scaffold(
-          backgroundColor: Colors.black,
-          body: Column(
-            children: [
-              Expanded(
-                child: SafeArea(
-                  bottom: false,
-                  child: IndexedStack(
-                    index: nav.currentIndex,
-                    children: _pages,
+    return BlocProvider( create: (context) => NavigationCubit(), child: BlocBuilder<NavigationCubit, NavigationState>(
+      builder: (context, state) {
+        if (state is NavigationState) {
+          return Scaffold(
+            backgroundColor: Colors.black,
+            body: Column(
+              children: [
+                Expanded(
+                  child: SafeArea(
+                    bottom: false,
+                    child: IndexedStack(
+                      index: state.currentIndex,
+                      children: _pages,
+                    ),
                   ),
                 ),
-              ),
-              CustomBottomNavBar(
-                currentIndex: nav.currentIndex,
-                onTap: (index) => context.read<NavigationCubit>().setTab(index),
-              ),
-            ],
-          ),
-        );
+                CustomBottomNavBar(
+                  currentIndex: state.currentIndex,
+                  onTap: (index) => context.read<NavigationCubit>().setTab(index),
+                ),
+              ],
+            ),
+          );
+        }
+        return Container();
       },
-    );
+    ));
   }
 }
