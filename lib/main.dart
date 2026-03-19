@@ -1,17 +1,30 @@
-import 'package:assignment2/cubit/favorites_cubit.dart';
-import 'package:assignment2/cubit/messages_cubit.dart';
-import 'package:assignment2/cubit/navigation_cubit.dart';
-import 'package:assignment2/screens/main_screen.dart';
+import 'package:assignment2/app/main_shell.dart';
+import 'package:assignment2/features/navigation/presentation/cubit/navigation_cubit.dart';
+import 'package:assignment2/injection_container.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const AppRoot());
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    if (kDebugMode) debugPrint(details.toString());
+  };
+  try {
+    Injector.init();
+    runApp(const AppRoot());
+  } catch (e, stack) {
+    if (kDebugMode) {
+      debugPrint('Startup error: $e');
+      debugPrint(stack.toString());
+    }
+    rethrow;
+  }
 }
 
-/// Provides Cubits app-wide. Use [context.read] / [context.watch] / [BlocBuilder].
+/// Root: Bloc providers + [GetMaterialApp].
 class AppRoot extends StatelessWidget {
   const AppRoot({super.key});
 
@@ -20,8 +33,8 @@ class AppRoot extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => NavigationCubit()),
-        BlocProvider(create: (_) => FavoritesCubit()),
-        BlocProvider(create: (_) => MessagesCubit()),
+        BlocProvider(create: (_) => Injector.createFavoritesCubit()),
+        BlocProvider(create: (_) => Injector.createMessagesCubit()),
       ],
       child: const MyApp(),
     );
@@ -33,11 +46,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // GetMaterialApp enables GetX (snackbar, dialogs, routing, etc.) alongside Bloc.
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(useMaterial3: true),
-      home: const MainScreen(),
+      home: const MainShell(),
     );
   }
 }

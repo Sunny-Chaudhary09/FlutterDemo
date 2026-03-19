@@ -1,32 +1,31 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Calendar month + selected stay range (Favorites / date picker tab).
-class FavoritesState extends Equatable {
+/// Stay / calendar selection shown on the Favorites (date picker) flow.
+class CalendarSelection extends Equatable {
   final DateTime focusedMonth;
   final DateTime rangeStart;
   final DateTime rangeEnd;
 
-  const FavoritesState({
+  const CalendarSelection({
     required this.focusedMonth,
     required this.rangeStart,
     required this.rangeEnd,
   });
 
-  factory FavoritesState.initial() {
-    return FavoritesState(
+  factory CalendarSelection.initial() {
+    return CalendarSelection(
       focusedMonth: DateTime(2022, 10),
       rangeStart: DateTime(2022, 10, 24),
       rangeEnd: DateTime(2022, 10, 26),
     );
   }
 
-  FavoritesState copyWith({
+  CalendarSelection copyWith({
     DateTime? focusedMonth,
     DateTime? rangeStart,
     DateTime? rangeEnd,
   }) {
-    return FavoritesState(
+    return CalendarSelection(
       focusedMonth: focusedMonth ?? this.focusedMonth,
       rangeStart: rangeStart ?? this.rangeStart,
       rangeEnd: rangeEnd ?? this.rangeEnd,
@@ -79,18 +78,4 @@ class FavoritesState extends Equatable {
 
   @override
   List<Object?> get props => [focusedMonth, rangeStart, rangeEnd];
-}
-
-class FavoritesCubit extends Cubit<FavoritesState> {
-  FavoritesCubit() : super(FavoritesState.initial());
-
-  void previousMonth() {
-    final m = state.focusedMonth;
-    emit(state.copyWith(focusedMonth: DateTime(m.year, m.month - 1)));
-  }
-
-  void nextMonth() {
-    final m = state.focusedMonth;
-    emit(state.copyWith(focusedMonth: DateTime(m.year, m.month + 1)));
-  }
 }

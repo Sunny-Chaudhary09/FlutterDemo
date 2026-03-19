@@ -1,14 +1,14 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:assignment2/cubit/messages_cubit.dart';
+import 'package:assignment2/features/messages/domain/entities/user_ui_settings.dart';
+import 'package:assignment2/features/messages/presentation/cubit/messages_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Settings / slide-out menu style screen (Messages tab).
-/// Dark mode toggle: [MessagesCubit] (Bloc).
-class MessagesScreen extends StatelessWidget {
-  const MessagesScreen({super.key});
+class MessagesPage extends StatelessWidget {
+  const MessagesPage({super.key});
 
   static const _headerMuted = Color(0xFF7A8BA8);
   static const _rowText = Colors.white;
@@ -300,8 +300,8 @@ class MessagesScreen extends StatelessWidget {
   Widget _darkModeRow(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
-      child: BlocBuilder<MessagesCubit, MessagesState>(
-        buildWhen: (prev, curr) => prev.darkModeOn != curr.darkModeOn,
+      child: BlocBuilder<MessagesCubit, UserUiSettings>(
+        buildWhen: (prev, curr) => prev.darkModeEnabled != curr.darkModeEnabled,
         builder: (context, state) {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -320,8 +320,8 @@ class MessagesScreen extends StatelessWidget {
                   ),
                 ),
                 Switch.adaptive(
-                  value: state.darkModeOn,
-                  onChanged: (v) => context.read<MessagesCubit>().setDarkMode(v),
+                  value: state.darkModeEnabled,
+                  onChanged: (v) => context.read<MessagesCubit>().setDarkModeEnabled(v),
                   activeThumbColor: Colors.white,
                   activeTrackColor: _glowBlue,
                   inactiveThumbColor: Colors.white54,

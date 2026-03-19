@@ -1,14 +1,14 @@
 import 'dart:ui';
 
-import 'package:assignment2/cubit/favorites_cubit.dart';
+import 'package:assignment2/features/favorites/domain/entities/calendar_selection.dart';
+import 'package:assignment2/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
-/// Date selection / booking screen (Favorites tab).
-/// State: [FavoritesCubit] (Bloc). Snackbar: GetX example on "Next".
-class FavoritesScreen extends StatelessWidget {
-  const FavoritesScreen({super.key});
+/// Date selection / booking (Favorites tab). State via [FavoritesCubit] + domain layer.
+class FavoritesPage extends StatelessWidget {
+  const FavoritesPage({super.key});
 
   static const _weekdayLabels = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
@@ -17,7 +17,7 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FavoritesCubit, FavoritesState>(
+    return BlocBuilder<FavoritesCubit, CalendarSelection>(
       builder: (context, state) {
         return ColoredBox(
           color: const Color(0xFF0A0E18),
@@ -102,7 +102,7 @@ class FavoritesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStaySummary(FavoritesState state) {
+  Widget _buildStaySummary(CalendarSelection state) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -153,7 +153,7 @@ class FavoritesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGlassCalendar(BuildContext context, FavoritesState state) {
+  Widget _buildGlassCalendar(BuildContext context, CalendarSelection state) {
     final first = DateTime(state.focusedMonth.year, state.focusedMonth.month);
     final daysInMonth =
         DateTime(state.focusedMonth.year, state.focusedMonth.month + 1, 0).day;
@@ -207,7 +207,7 @@ class FavoritesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomBar(BuildContext context, FavoritesState state) {
+  Widget _buildBottomBar(BuildContext context, CalendarSelection state) {
     final bottomPad = MediaQuery.paddingOf(context).bottom;
 
     return ClipRect(

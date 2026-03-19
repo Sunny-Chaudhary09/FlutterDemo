@@ -3,9 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 /// Details page (second tab): hero image, glassmorphism card, host info, Book Now.
-/// Matches the Figma Details Page design with blur card and dark theme.
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key});
+class DetailsPage extends StatelessWidget {
+  const DetailsPage({super.key});
 
   static const String _heroImage = 'assets/image1.jpeg';
   static const double _imageHeight = 320;

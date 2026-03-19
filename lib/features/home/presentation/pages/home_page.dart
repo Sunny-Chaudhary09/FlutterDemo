@@ -1,9 +1,9 @@
-import 'package:assignment2/widgets/custom_widgets.dart';
+import 'package:assignment2/shared/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 
 /// First tab: listing of places with search bar and cards.
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {

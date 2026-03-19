@@ -1,21 +1,21 @@
-import 'package:assignment2/cubit/navigation_cubit.dart';
-import 'package:assignment2/screens/details_screen.dart';
-import 'package:assignment2/screens/favorites_screen.dart';
-import 'package:assignment2/screens/home_screen.dart';
-import 'package:assignment2/screens/messages_screen.dart';
-import 'package:assignment2/widgets/custom_widgets.dart';
+import 'package:assignment2/features/details/presentation/pages/details_page.dart';
+import 'package:assignment2/features/favorites/presentation/pages/favorites_page.dart';
+import 'package:assignment2/features/home/presentation/pages/home_page.dart';
+import 'package:assignment2/features/messages/presentation/pages/messages_page.dart';
+import 'package:assignment2/features/navigation/presentation/cubit/navigation_cubit.dart';
+import 'package:assignment2/shared/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Root screen with bottom navigation: Home, Details, Favorites, Messages.
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+/// App shell: bottom navigation + tab pages.
+class MainShell extends StatelessWidget {
+  const MainShell({super.key});
 
-  static const List<Widget> _screens = [
-    HomeScreen(),
-    DetailsScreen(),
-    FavoritesScreen(),
-    MessagesScreen(),
+  static const List<Widget> _pages = [
+    HomePage(),
+    DetailsPage(),
+    FavoritesPage(),
+    MessagesPage(),
   ];
 
   @override
@@ -31,7 +31,7 @@ class MainScreen extends StatelessWidget {
                   bottom: false,
                   child: IndexedStack(
                     index: nav.currentIndex,
-                    children: _screens,
+                    children: _pages,
                   ),
                 ),
               ),

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Bottom navigation tab index (0–3).
+/// UI state for bottom navigation (tab index only — no persistence).
 class NavigationState extends Equatable {
   final int currentIndex;
 
